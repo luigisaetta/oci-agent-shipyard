@@ -1,6 +1,6 @@
 """
 Author: L. Saetta
-Date last modified: 2026-09-30
+Date last modified: 2026-10-21
 License: MIT
 Description: Exercise verifier handling of OCI Hosted Deployment update states.
 """
@@ -20,6 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
 BASH_SCRIPT = ROOT / "scripts" / "verify_deployment.sh"
 POWERSHELL_SCRIPT = ROOT / "scripts" / "verify_deployment.ps1"
 PWSH = shutil.which("pwsh")
+# Replaces Invoke-WebRequest, which the fake curl does not cover.
+FAKE_HTTP_LAUNCHER = Path(__file__).resolve().parent / "fake_http_launcher.ps1"
 APPLICATION_ID = "ocid1.generativeaihostedapplication.oc1.test"
 MUTATING_COMMANDS = {"create", "delete", "update", "add-artifact"}
 
@@ -177,7 +179,7 @@ def run_verifier(
     params=[
         pytest.param((BASH_SCRIPT, [shutil.which("bash") or "/bin/bash"]), id="bash"),
         pytest.param(
-            (POWERSHELL_SCRIPT, [PWSH, "-NoProfile", "-File"]),
+            (POWERSHELL_SCRIPT, [PWSH, "-NoProfile", "-File", str(FAKE_HTTP_LAUNCHER)]),
             id="powershell",
             marks=pytest.mark.skipif(PWSH is None, reason="pwsh is unavailable."),
         ),

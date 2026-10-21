@@ -1,6 +1,6 @@
 """
 Author: L. Saetta
-Date last modified: 2026-10-13
+Date last modified: 2026-10-21
 License: MIT
 Description: Exercise Bash verifier identity-domain authentication without
 network access.
@@ -21,6 +21,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "verify_deployment.sh"
 POWERSHELL_SCRIPT = ROOT / "scripts" / "verify_deployment.ps1"
 PWSH = shutil.which("pwsh")
+# Replaces Invoke-WebRequest, which the fake curl does not cover.
+FAKE_HTTP_LAUNCHER = Path(__file__).resolve().parent / "fake_http_launcher.ps1"
 APPLICATION_ID = "ocid1.generativeaihostedapplication.oc1.test"
 CLIENT_SECRET = "placeholder-client-secret"
 ACCESS_TOKEN = "placeholder-access-token"
@@ -164,6 +166,8 @@ def run_verifier(  # pylint: disable=too-many-locals
         IDCS_OCI_LOG=str(log_paths["oci"]),
         IDCS_CURL_LOG=str(log_paths["curl"]),
         IDCS_PYTHON_LOG=str(log_paths["python"]),
+        # PowerShell runs only: a request without a token is rejected, as live.
+        FAKE_HTTP_UNAUTHENTICATED_STATUS="401",
         IDCS_ACCESS_TOKEN=ACCESS_TOKEN,
         IDCS_UNAUTHENTICATED_STATUS=str(
             scenario.get(
@@ -244,7 +248,7 @@ def run_verifier(  # pylint: disable=too-many-locals
     params=[
         pytest.param((SCRIPT, [shutil.which("bash") or "/bin/bash"]), id="bash"),
         pytest.param(
-            (POWERSHELL_SCRIPT, [PWSH, "-NoProfile", "-File"]),
+            (POWERSHELL_SCRIPT, [PWSH, "-NoProfile", "-File", str(FAKE_HTTP_LAUNCHER)]),
             id="powershell",
             marks=pytest.mark.skipif(PWSH is None, reason="pwsh is unavailable."),
         ),

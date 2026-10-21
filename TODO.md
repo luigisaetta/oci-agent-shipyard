@@ -82,8 +82,9 @@ Parity between `scripts/*.sh` and `scripts/*.ps1` is declared but has never
 been executed on the primary workstation. CI is out of scope by design, so
 verification is local:
 
-* routine: install PowerShell 7 on macOS (`brew install powershell`) and run
-  the PowerShell tests after every script change;
+* routine: install PowerShell 7 on macOS (official Microsoft package, or
+  Homebrew) and run the PowerShell tests after every script change. Done on
+  2026-10-21: 617 passed, 0 skipped (Spec 007); keep running them;
 * before a release tag: one pass on Windows, by hand or driven by Codex, for
   what only Windows can show (paths, Docker Desktop or Podman, encodings);
 * record both results in Spec 007.

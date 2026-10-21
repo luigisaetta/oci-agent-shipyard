@@ -316,3 +316,24 @@ hook and profile adjustment described in
 [Getting started on Windows](../docs/getting-started-windows.md#3-create-the-python-environment-and-install-the-libraries).
 See the pilot log for observed paste issues and the limits of offline
 permission-check diagnostics.
+
+### 2026-10-21, PowerShell tests on macOS (TODO item 2, routine part)
+
+* PowerShell 7.6.7 installed on the primary macOS workstation from the
+  official Microsoft package (Homebrew is not required). With `pwsh` on PATH,
+  every PowerShell scenario of the suite runs instead of being skipped.
+* First run: 614 passed, 3 failed. The three failures were in the tests, not
+  in the scripts: `verify_deployment.ps1` probes endpoints with
+  `Invoke-WebRequest`, which the fake `curl` of the Bash tests does not
+  replace, so the PowerShell runs tried the network. Fix:
+  `tests/fake_http_launcher.ps1` defines a global fake `Invoke-WebRequest`
+  (200 with an `Authorization` header; without one, 200 or
+  `FAKE_HTTP_UNAUTHENTICATED_STATUS`), then runs the target script; the
+  PowerShell runners of `tests/test_verify_deployment_updating.py` and
+  `tests/test_verify_deployment_idcs.py` use it. No script changed.
+* Second run: 617 passed, 0 skipped; Black and Pylint (10.00/10) passed. This
+  is the first execution of the PowerShell twins of Spec 026 (storage in the
+  deploy script) and Spec 029 (teardown wrapper).
+* Still open: the pass on a real Windows workstation before a release tag
+  (paths, OCI CLI permission hooks, Docker Desktop or Podman, symbolic links
+  of the skill installer, encodings).
