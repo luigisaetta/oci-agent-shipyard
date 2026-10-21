@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 0.8.0 - 2026-10-21
+
+OCI Agent Shipyard: the new name, agents with a managed Oracle database, a
+complete teardown, and the platform dispatch that prepares OCI AI Data
+Platform skills. See the [release notes](docs/releases/v0.8.0.md).
+
 * 2026-10-16: New skill `oci-agent-teardown` (Spec 029). It removes an agent
   completely: the Hosted Application and its deployment, the managed storage,
   the OCIR repository with its images, and the local container images. It
