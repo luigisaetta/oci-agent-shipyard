@@ -15,8 +15,7 @@ follow the numbers unless a dependency says otherwise.
 | # | Item | Depends on | Effort | Phase |
 | --- | --- | --- | --- | --- |
 | 17 | [Local LLM test for Resource Principal agents](#17-local-llm-test-for-resource-principal-agents) (issue found 2026-10-09) | — | Low-medium | Now |
-| 2 | [Verify PowerShell parity](#2-verify-powershell-parity) | — | Low | Now |
-| 3 | [Compatibility check and pre-release smoke test](#3-compatibility-check-and-pre-release-smoke-test) | — | Low | Now |
+| 3 | [Compatibility check and pre-release smoke test](#3-compatibility-check-and-pre-release-smoke-test), including the Windows pass | — | Low | Now |
 | 5 | [Live check of runtime environment variables](#5-live-check-of-runtime-environment-variables) | — | Low | Live session |
 | 7 | [Generative AI demo with resource principal](#7-generative-ai-demo-with-resource-principal) | 5 | Medium | Short term |
 | 10 | [IAM pre-flight check (advisory)](#10-iam-pre-flight-check-advisory) | 5, 7 | Medium | Short term |
@@ -76,28 +75,27 @@ Two other findings of the same test, for the agent guidelines
   200 locally; reading the body by hand, and accepting an empty body, fixed
   it. Confirm the cause with a small test before writing a rule.
 
-## 2. Verify PowerShell parity
+## 2. Verify PowerShell parity (closed)
 
-Parity between `scripts/*.sh` and `scripts/*.ps1` is declared but has never
-been executed on the primary workstation. CI is out of scope by design, so
-verification is local:
-
-* routine: install PowerShell 7 on macOS (official Microsoft package, or
-  Homebrew) and run the PowerShell tests after every script change. Done on
-  2026-10-21: 617 passed, 0 skipped (Spec 007); keep running them;
-* before a release tag: one pass on Windows, by hand or driven by Codex, for
-  what only Windows can show (paths, Docker Desktop or Podman, encodings);
-* record both results in Spec 007.
+Closed on 2026-10-21. PowerShell 7 runs on the primary macOS workstation and
+the full suite executes every PowerShell scenario: 617 passed, 0 skipped
+(Spec 007). Keep running the PowerShell tests after every script change. The
+pass on a real Windows workstation moved to item 3.
 
 ## 3. Compatibility check and pre-release smoke test
 
 The tested OCI CLI and SDK versions are declared in each release's notes
-(v0.5.0: SDK 2.187.0, CLI 3.94.0).
+(v0.8.0: SDK 2.188.0, CLI 3.95.0).
 
 * Warn at startup when the installed OCI CLI version differs from the tested
   one.
 * Document a manual smoke test (release and rollback on `hello-world`) to run
   before each tag, to detect service regressions. No scheduled runs.
+* Before each tag, one pass on a real Windows workstation (from item 2), by
+  hand or driven by Codex, for what only Windows can show: paths, the OCI CLI
+  permission hooks, Docker Desktop or Podman, the symbolic links of the skill
+  installer, and encodings. Record the result in Spec 007. Not done for
+  v0.8.0.
 
 ## 5. Live check of runtime environment variables
 
