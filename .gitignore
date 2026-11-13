@@ -10,5 +10,6 @@ htmlcov/
 .DS_Store
 
 # Private working notes, never pushed
+/notes/
 piano-miglioramenti.md
 revisione-progetto.md

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* 2026-11-13: Add a concise skill-validation report covering NVIDIA
+  SkillEvaluator results and Agent Skills reference-format validation.
+
 * 2026-11-13: Add an Agent Skills reference-validation badge to the main
   README, linked to the seven skills' recorded `skills-ref` results (Spec 030).
 
