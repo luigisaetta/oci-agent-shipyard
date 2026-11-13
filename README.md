@@ -10,6 +10,7 @@ with plain-language requests to Codex.**
 ![Code style: Black](https://img.shields.io/badge/code%20style-black-000000)
 ![Linting: Pylint](https://img.shields.io/badge/linting-pylint-blue)
 ![Testing: pytest](https://img.shields.io/badge/testing-pytest-0A9EDC?logo=pytest&logoColor=white)
+[![Agent Skills: skills-ref validated](https://img.shields.io/badge/Agent%20Skills-skills--ref%20validated-brightgreen)](specs/030-skill-metadata-and-troubleshooting.md#agent-skills-format-validation)
 
 ![Overview of the OCI Enterprise AI agent release workflow](docs/oci-agent-skills-overview.svg)
 

@@ -102,3 +102,45 @@ The new skill's size estimate increased from 5048 to 5220 characters/4 tokens;
 the existing size penalty remains unchanged. These results establish static
 documentation quality under this evaluator configuration only. Full security
 scanning, agent behavior, and remote OCI execution were not evaluated.
+
+## Agent Skills format validation
+
+2026-11-13 follow-up scope: expose the completed reference-validator check
+through a README badge labeled `Agent Skills | skills-ref validated`, linking
+to this evidence. This is a static badge for an observed local check, not a
+CI status or an independent certification. No CI workflow, dependency, or skill
+content change is included. Acceptance: the badge renders in the existing badge
+group and its link resolves to this section; the wording describes only the
+validation actually performed.
+
+All seven skills passed the `skills-ref validate` CLI with exit code 0, using
+skills-ref 0.1.0 from the official
+[reference implementation](https://github.com/agentskills/agentskills/tree/83021e2be457a9b6679148719c1f6074f0ad975e/skills-ref),
+commit `83021e2be457a9b6679148719c1f6074f0ad975e`, under Python 3.11.17 in an
+isolated temporary virtual environment. Each invocation printed `Valid skill`.
+The project files and Python environments were not modified by validation.
+
+To reproduce, clone that repository, check out the recorded commit, create a
+virtual environment with Python 3.11 or later, and install its `skills-ref`
+subdirectory as documented in its README. From the shipyard checkout, run with
+that environment active:
+
+```bash
+for skill in skills/oci-agent-*; do
+  skills-ref validate "$skill" || exit
+done
+```
+
+The validator checks frontmatter parsing, allowed fields, required name and
+description, naming conventions and folder-name match, and compatibility-field
+constraints when present. It does not establish operational behavior, security,
+or OCI compatibility. The published
+[Agent Skills specification](https://agentskills.io/specification) remains the
+format authority; the reference implementation describes itself as a
+demonstration library.
+
+Badge verification (2026-11-13): Shields.io returned the badge SVG successfully;
+its accessible label is `Agent Skills: skills-ref validated`. Reviewed the
+README target file and section anchor, and `git diff --check` passed. This is
+a documentation-only change; no Python source, skill, or remote OCI operation
+changed.

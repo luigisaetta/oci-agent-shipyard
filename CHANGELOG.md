@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* 2026-11-13: Add an Agent Skills reference-validation badge to the main
+  README, linked to the seven skills' recorded `skills-ref` results (Spec 030).
+
 * 2026-11-13: Add author and operation tags plus concise troubleshooting
   guidance to all seven skills (Spec 030), preserving existing workflows,
   approval requirements, and Bash/PowerShell support.
