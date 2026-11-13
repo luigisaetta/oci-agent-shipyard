@@ -1,5 +1,8 @@
 ---
 name: oci-agent-push
+metadata:
+  author: "L. Saetta"
+  tags: "oci, hosted-applications, containers, ocir, publish"
 description: Create an OCIR repository and push a verified container image for OCI Generative AI Hosted Applications (Hosted Deployments, OCI Enterprise AI), not for OCI AI Data Platform (AI DP) agents.
 ---
 
@@ -153,6 +156,14 @@ Never switch platform silently.
 8. State that a push does not verify hosted deployment compatibility. Offer
    `docker logout "$OCIR_REGISTRY"` as optional local credential cleanup; token
    revocation is a separate OCI Console/IAM action.
+
+## Troubleshooting
+
+| Symptom | Cause | Action |
+| --- | --- | --- |
+| Repository lookup exits 20. | The requested repository is absent. | Show the resolved compartment and obtain explicit authorization before creating it. |
+| Image check fails (exit 10). | The local image is missing or is not `linux/amd64`. | Return to the build skill to prepare and verify the intended image before pushing. |
+| Push fails. | The container engine or registry operation failed. | Report the source, target, exit code, and available error; stop and do not retry without direction. |
 
 ## Limitations
 

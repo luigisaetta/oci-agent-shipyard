@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* 2026-11-13: Add author and operation tags plus concise troubleshooting
+  guidance to all seven skills (Spec 030), preserving existing workflows,
+  approval requirements, and Bash/PowerShell support.
+
 ## 0.8.0 - 2026-10-21
 
 OCI Agent Shipyard: the new name, agents with a managed Oracle database, a

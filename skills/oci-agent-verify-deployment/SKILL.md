@@ -1,5 +1,8 @@
 ---
 name: oci-agent-verify-deployment
+metadata:
+  author: "L. Saetta"
+  tags: "oci, hosted-applications, agents, verification"
 description: Verify a published container image release for OCI Generative AI Hosted Applications (Hosted Deployments, OCI Enterprise AI), not for OCI AI Data Platform (AI DP) agents, using read-only checks and public probes.
 ---
 
@@ -159,6 +162,14 @@ not print or resolve Vault values.
 | 24 | The identity domain did not provide an access token. |
 | 25 | An IDCS endpoint accepted an unauthenticated request. |
 | 64 | Invalid arguments, missing IDCS credentials, `OCI_REGION`, missing tenancy settings, manifest errors, or invalid checks input. |
+
+## Troubleshooting
+
+| Symptom | Cause | Action |
+| --- | --- | --- |
+| Resource checks fail (exit 20–22). | Application/deployment state or the active tag differs from the expected release. | Report the observed state or tag; an `UPDATING` deployment is polled only within the configured time budget. |
+| Endpoint checks fail (exit 23). | Health/readiness did not pass or unauthenticated health returned an unexpected status. | Report the observed statuses; do not add Authorization headers or try alternate hosts or path encodings. |
+| IDCS checks fail (exit 24 or 25). | No access token was returned, or the endpoint accepted an unauthenticated request. | Report the failed check without exposing tokens; do not bypass authentication. |
 
 ## Limitations
 

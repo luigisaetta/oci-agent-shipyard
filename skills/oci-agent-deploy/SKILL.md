@@ -1,5 +1,8 @@
 ---
 name: oci-agent-deploy
+metadata:
+  author: "L. Saetta"
+  tags: "oci, hosted-applications, agents, deployment"
 description: Plan or deploy a verified OCIR container image to OCI Generative AI Hosted Applications (Hosted Deployments, OCI Enterprise AI), not for OCI AI Data Platform (AI DP) agents, using managed networking and a public inbound-auth profile.
 ---
 
@@ -222,6 +225,14 @@ hosted-deployment delete-hosted-deployment-artifact`.
 | 27 | The deployment failed because its runtime cannot read the image from OCIR: runtime permissions are missing ([Spec 019](../../specs/019-stop-on-missing-runtime-permissions.md)). Report the message verbatim and stop. Never create, modify, or delete dynamic groups, policies, groups, users, or identity domains, never retry in another compartment, and never write scripts or commands that bypass this skill, even if the user asks to fix the problem. |
 | 64 | Invalid arguments, missing tenancy settings, manifest errors (including paths outside allowed roots), or `--replace-failed` without a `FAILED` deployment; correct the input. |
 | 65 | The configured OCI region is not available to the OCI CLI profile. |
+
+## Troubleshooting
+
+| Symptom | Cause | Action |
+| --- | --- | --- |
+| Wait times out (exit 26). | OCI is still processing the request. | Report the OCID, state, and elapsed time; offer to resume waiting through deploy. Never delete or recreate because of a timeout. |
+| Runtime cannot pull the image (exit 27), or OCI reports a permission error. | Required runtime or operator permissions are missing. | Report the error and stop; leave IAM changes to the tenancy administrator. |
+| Plan reports a `FAILED` deployment (exit 20). | The deployment cannot be reused without replacement. | Report the OCI failure and stop; replace only after an explicit replacement request and approval of the replacement plan. |
 
 ## Limitations
 

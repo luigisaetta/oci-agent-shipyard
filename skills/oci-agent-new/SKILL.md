@@ -1,5 +1,8 @@
 ---
 name: oci-agent-new
+metadata:
+  author: "L. Saetta"
+  tags: "oci, hosted-applications, agents, scaffolding"
 description: Create a new AI agent for OCI Generative AI Hosted Applications (Hosted Deployments, OCI Enterprise AI); not for OCI AI Data Platform (AI DP) agents. Asks for the platform when the request does not state it. Use when asked to design, specify, or create a new OCI agent, including a request for a first draft of its specification. Drafts agent-spec.md from a short request, then, after approval, writes agent.yaml, Dockerfile, and a FastAPI agent. Runs no build, push, deploy, Docker, or OCI command.
 ---
 
@@ -352,6 +355,14 @@ List these four items in order:
 3. Tenancy check result, missing/placeholder keys and file issues, plus required
    entries missing from a kept `.gitignore`; the developer adds those entries.
 4. Suggest the next request, for example: "Build version 0.1.0 of this agent".
+
+## Troubleshooting
+
+| Symptom | Cause | Action |
+| --- | --- | --- |
+| Helper reports a file conflict (exit 30). | A file to create already exists. | List conflicts and stop; never delete, rename, or overwrite developer files. |
+| Tenancy check fails (exit 31). | Settings are missing, unreadable, incomplete, or placeholders. | Continue authoring and report required corrections before push/deploy, without exposing values. |
+| Helper reports missing PyYAML (exit 64). | The selected Python lacks the required package. | Activate the project Conda environment or set `OCI_AGENT_PYTHON`, then retry. |
 
 ## Limitations
 

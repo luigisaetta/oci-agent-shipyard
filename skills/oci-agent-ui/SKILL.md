@@ -1,5 +1,8 @@
 ---
 name: oci-agent-ui
+metadata:
+  author: "L. Saetta"
+  tags: "oci, hosted-applications, agents, demo-ui"
 description: Create a local, end-user demo web UI (Next.js) for an existing agent of OCI Generative AI Hosted Applications (Hosted Deployments, OCI Enterprise AI), from its agent-spec.md; not for OCI AI Data Platform (AI DP) agents. Use when asked to build a UI, a demo page, or a front end to show an OCI agent to customers or management. Drafts ui/ui-spec.md first, then, after approval, generates the ui/ folder. The UI runs only on this computer; it never deploys anything.
 ---
 
@@ -195,6 +198,14 @@ lives only in `ui/.env.local`; the server listens only on `127.0.0.1`.
    ([Protecting an agent with JWT tokens](../../docs/idcs-confidential-application.md)).
    The local server uses them to request a token; the browser never sees
    them.
+
+## Troubleshooting
+
+| Symptom | Cause | Action |
+| --- | --- | --- |
+| UI build fails. | Generated files or dependencies do not meet the template requirements. | Read the installed Next.js documentation, fix only files generated in this session, and build again. |
+| UI calls the wrong agent. | The configured target needs changing. | Set `AGENT_BASE_URL` in `ui/.env.local` and restart the development server; keep the address out of other files. |
+| A demo request fails. | The local server or agent request encountered a technical problem. | Inspect the development-server terminal; for `public-idcs`, have the developer fill credentials by hand without reading or printing them. |
 
 ## Limitations
 

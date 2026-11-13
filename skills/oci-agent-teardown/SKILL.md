@@ -1,5 +1,8 @@
 ---
 name: oci-agent-teardown
+metadata:
+  author: "L. Saetta"
+  tags: "oci, hosted-applications, agents, cleanup"
 description: Remove an agent of OCI Generative AI Hosted Applications (Hosted Deployments, OCI Enterprise AI) completely, not for OCI AI Data Platform (AI DP) agents. Use when asked to delete, tear down, or clean up an agent. Plans first; with explicit authorization and the typed application name, deletes the Hosted Application and its deployment, its managed storage, its OCIR repository with the images, and its local container images.
 ---
 
@@ -127,6 +130,14 @@ name, and never delete resources by hand or with other commands instead.
 | 26 | OCI is still deleting after the wait timeout; nothing else was changed. Offer to run the teardown again to resume waiting. |
 | 64 | Invalid arguments, manifest errors, missing tenancy settings, or a missing or different `--confirm`. |
 | 65 | The configured OCI region is not available to the OCI CLI profile. |
+
+## Troubleshooting
+
+| Symptom | Cause | Action |
+| --- | --- | --- |
+| Apply is rejected (exit 64). | Inputs are invalid, including a confirmation name that differs from the application name. | Correct the reported input; obtain the user's typed name and explicit plan authorization before applying. |
+| Teardown fails or times out (exit 1 or 26). | An operation failed or OCI is still processing it. | Report what was deleted and what remains; offer to rerun the plan, which skips resources already deleted. |
+| Local images remain. | No usable container engine is available, or a container uses an image. | Report the images left; do not remove unrelated containers or broaden cleanup. |
 
 ## Limitations
 

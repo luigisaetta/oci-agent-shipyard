@@ -1,5 +1,8 @@
 ---
 name: oci-agent-build
+metadata:
+  author: "L. Saetta"
+  tags: "oci, hosted-applications, containers, build"
 description: Build or verify a linux/amd64 container image for OCI Generative AI Hosted Applications (Hosted Deployments, OCI Enterprise AI), not for OCI AI Data Platform (AI DP) agents. It does not push images or deploy resources.
 ---
 
@@ -153,6 +156,14 @@ manifest-index behavior recorded in Spec 001.
 Verify: optional POST body and final report with image, digest availability,
 static/runtime architecture, readiness seconds, and PASS/FAIL. Failed smoke tests
 print container logs. The verifier removes its container; the image stays local.
+
+## Troubleshooting
+
+| Symptom | Cause | Action |
+| --- | --- | --- |
+| Preflight fails (exit 1 or 2). | A prerequisite is unavailable or the builder lacks amd64 support. | Restore the reported prerequisite or follow the builder-specific guidance; keep the target platform unchanged. |
+| Build fails during package installation (exit 5 or 6). | Dependency resolution failed or a package needs compilation. | Inspect the offending package/version; suggest a compatible version or alternative with a `linux/amd64` wheel. |
+| Verification fails (exit 10–13). | Image, architecture, startup, or functional checks failed. | Report the failed check and available container logs; use the exit-code table to identify the correction. |
 
 ## Limitations
 
